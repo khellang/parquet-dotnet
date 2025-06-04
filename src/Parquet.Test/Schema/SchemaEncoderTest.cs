@@ -31,5 +31,15 @@ namespace Parquet.Test.Schema {
             Field f = SchemaEncoder.Decode(new List<Meta.SchemaElement> { se }, new ParquetOptions(), ref i, out _)!;
             Assert.Equal(typeof(Guid), ((DataField)f).ClrType);
         }
+
+        [Fact]
+        public void Encode_enum() {
+            var @enum = new DataField<ConsoleColor>("e");
+            Meta.SchemaElement se = SchemaEncoder.Encode(@enum);
+
+            int i = 0;
+            Field f = SchemaEncoder.Decode(new List<Meta.SchemaElement> { se }, new ParquetOptions(), ref i, out _)!;
+            Assert.Equal(typeof(int), ((DataField)f).ClrType);
+        }
     }
 }

@@ -367,6 +367,10 @@ namespace Parquet.Encodings {
             SType st = field.ClrType;
             var tse = new SchemaElement { Name = field.Name };
 
+            if(st.IsEnum) {
+                st = st.GetEnumUnderlyingType();
+            }
+
             if(st == typeof(bool)) {                                // boolean
                 tse.Type = Type.BOOLEAN;
             } else if(st == typeof(byte) || st == typeof(sbyte) ||  // 32-bit numbers
